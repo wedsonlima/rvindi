@@ -1,4 +1,4 @@
-# Vindi Litle Help
+# Vindi Little Help
 
 ActiveRecord-like way to interact with Vindi API
 
@@ -11,7 +11,7 @@ ActiveRecord-like way to interact with Vindi API
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'vindi-litle-help'
+gem 'vindi-little-help'
 ```
 
 And then execute:
@@ -20,7 +20,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install vindi-litle-help
+    $ gem install vindi-little-help
 
 ## Usage
 
