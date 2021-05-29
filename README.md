@@ -40,6 +40,8 @@ Or install it yourself as:
 ### Config
 
 ```ruby
+# config/initializers/vindi.rb
+
 Vindi.config do |c|
   c.sandbox = true # default is false
   c.api_key = 'YOUR API KEY'
@@ -49,20 +51,67 @@ end
 
 ### Examples
 
+#### Plans
+
+```ruby
+
+  # List active plans
+
+  plans = Vindi::Plan.active
+
+  # Create a recurring plan
+
+  plan = Vindi::Plan.new.tap do |p|
+    p.name = "Monthly Plan"
+    p.description = "This plan will be renewed every month in the same day"
+    p.period = "monthly"
+    p.recurring = true
+    p.code = 1
+    p.plan_items = [
+      {
+        cycles: nil,
+        product_id: 1
+      }
+    ]
+  end
+
+  # Create an yearly plan with installments
+
+  plan = Vindi::Plan.new.tap do |p|
+    p.name = "Yearly Plan"
+    p.description = "This plan will be paid in 12 installments"
+    p.period = "yearly"
+    p.billing_cycles = 1
+    p.installments = 12
+    p.code = 1
+    p.plan_items = [
+      {
+        cycles: nil,
+        product_id: 1
+      }
+    ]
+  end
+```
+
 #### Customer
 
 ```ruby
+# Finding a specific customer
 customer = Vindi::Customer.find(1)
 # #<Vindi::Customer(customers/1) name="Gandalf the Grey" email="gandalf@middleearth.com" registry_code="" code="1" notes=nil status="archived" created_at="0001-01-01T00:00:01.000-00:00" updated_at="0001-01-01T00:00:01.000-00:00" metadata={} phones=[] id=1 address=#<Vindi::Address(addresses) street=nil number=nil additional_details=nil zipcode=nil neighborhood=nil city=nil state=nil country=nil>>
 
+# Listing all active customers
 customers = Vindi::Customer.active
 # [#<Vindi::Customer(customers/1) name="Gandalf the Grey" email="gandalf@middleearth.com" registry_code="" code="1" notes=nil status="archived" created_at="0001-01-01T00:00:01.000-00:00" updated_at="0001-01-01T00:00:01.000-00:00" metadata={} phones=[] id=1 address=#<Vindi::Address(addresses) street=nil number=nil additional_details=nil zipcode=nil neighborhood=nil city=nil state=nil country=nil>>]
 
-customers = Vindi::Customer.where(created_at: Time.zone.today)
-# You get the ideia
+# ...paginated
+customers = Vindi::Customer.active.page(2)
 
+# New customers from yesterday
+customers = Vindi::Customer.where(created_at: Time.zone.today)
+
+# New customers since yesterday
 customers = Vindi::Customer.where(gt: { created_at: Time.zone.yesterday })
-# Same here
 ```
 
 #### Subscription

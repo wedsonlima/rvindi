@@ -7,7 +7,7 @@ module Vindi
   #
   #   plans = Vindi::Plan.active
   #
-  # @example Create a plan
+  # @example Create a recurring plan
   #
   # plan = Vindi::Plan.new.tap do |p|
   #   p.name = "Monthly Plan"
@@ -23,13 +23,30 @@ module Vindi
   #   ]
   # end
   #
+  # @example Create an yearly plan with installments
+  #
+  # plan = Vindi::Plan.new.tap do |p|
+  #   p.name = "Yearly Plan"
+  #   p.description = "This plan will be paid in 12 installments"
+  #   p.period = "yearly"
+  #   p.billing_cycles = 1
+  #   p.installments = 12
+  #   p.code = 1
+  #   p.plan_items = [
+  #     {
+  #       cycles: nil,
+  #       product_id: 1
+  #     }
+  #   ]
+  # end
+  #
   class Plan < Model
     # has_many :plan_items
     # has_many :products, through: :plan_items
 
     scope :recurring, -> { where(billing_cycles: nil) }
 
-    after_initialize :set_default
+    after_initialize :set_defaults
 
     def recurring=(value)
       self.billing_cycles = value ? nil : 0
@@ -43,7 +60,7 @@ module Vindi
 
     private
 
-    def set_default
+    def set_defaults
       self.billing_trigger_type = "beginning_of_period"
       self.billing_trigger_day = 0
       self.installments = 1
@@ -66,8 +83,8 @@ module Vindi
     end
 
     def set_yearly
-      self.interval = "years"
-      self.interval_count = 1
+      self.interval = "months"
+      self.interval_count = 12
     end
   end
 end
