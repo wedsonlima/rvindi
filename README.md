@@ -4,7 +4,20 @@ ActiveRecord-like way to interact with Vindi API
 
 ## Vindi
 
-    https://vindi.github.io/api-docs/dist/?url=https://sandbox-app.vindi.com.br/api/v1/docs#/
+[Vindi](https://vindi.com.br) is a brazilian fintech, that was recently acquired by [Locaweb](https://blog.vindi.com.br/agora-a-vindi-faz-parte-do-grupo-locaweb), that helps other companies to work with **recurring payments**.
+
+### API docs
+
+  * [Swagger sandbox](https://vindi.github.io/api-docs/dist/?url=https://sandbox-app.vindi.com.br/api/v1/docs#/)
+  * [Swagger prod](https://vindi.github.io/api-docs/dist)
+  *
+    [Vindi - Official Gem](https://github.com/vindi/vindi-ruby)
+
+    > You may ask: Why create another if there is already one that's official?
+    > *And I'll tell you, **little grasshopper**: Because I think this one could be more beautiful.*
+    >
+    > And you also may ask: Why the hell is the doc in english when all those interested are from the big banana republic?
+    > *And my answer to you would be: You ask a lot of questions, huh?*
 
 ## Installation
 
@@ -29,32 +42,49 @@ Or install it yourself as:
 ```ruby
 Vindi::Config.new do |c|
   c.sandbox = true # default is false
-  c.api_key = 'YOUT API KEY'
+  c.api_key = 'YOUR API KEY'
+  c.webhook_secret = 'YOUR WEBHOOK SECRET'
 end
 ```
 
-### Customers
+### Examples
+
+#### Customer
 
 ```ruby
 customer = Vindi::Customer.find(1)
+# #<Vindi::Customer(customers/1) name="Gandalf the Grey" email="gandalf@middleearth.com" registry_code="" code="1" notes=nil status="archived" created_at="0001-01-01T00:00:01.000-00:00" updated_at="0001-01-01T00:00:01.000-00:00" metadata={} phones=[] id=1 address=#<Vindi::Address(addresses) street=nil number=nil additional_details=nil zipcode=nil neighborhood=nil city=nil state=nil country=nil>>
 
 customers = Vindi::Customer.active
+# [#<Vindi::Customer(customers/1) name="Gandalf the Grey" email="gandalf@middleearth.com" registry_code="" code="1" notes=nil status="archived" created_at="0001-01-01T00:00:01.000-00:00" updated_at="0001-01-01T00:00:01.000-00:00" metadata={} phones=[] id=1 address=#<Vindi::Address(addresses) street=nil number=nil additional_details=nil zipcode=nil neighborhood=nil city=nil state=nil country=nil>>]
 
 customers = Vindi::Customer.where(created_at: Time.zone.today)
+# You get the ideia
 
 customers = Vindi::Customer.where(gt: { created_at: Time.zone.yesterday })
+# Same here
 ```
 
+#### Subscription
 
-## Development
+```ruby
+# Active subscriptions of a customer
+subscriptions = Vindi::Customer.find(1).subscriptions.active
+# [#<Vindi::Subscription(subscriptions/1) status="active" start_at="2020-07-14T00:00:00.000-03:00" ...>>,
+# #<Vindi::Subscription(subscriptions/2) status="active" start_at="2020-07-14T00:00:00.000-03:00" ...>>]
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake -test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+# You can cancel an active subscription
+subscription = Vindi::Customer.find(1).subscriptions.active.last
+subscription.cancel!
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+# Or reactivate one
+subscription = Vindi::Subscription.find(1)
+subscription.active!
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/vindi. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/vindi/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/wedsonlima/vindi-ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/vindi/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -62,4 +92,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Vindi project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/vindi/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Vindi project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/wedsonlima/vindi-ruby/blob/main/CODE_OF_CONDUCT.md).
