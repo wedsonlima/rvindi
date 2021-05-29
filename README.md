@@ -1,15 +1,17 @@
-# Vindi
+# Vindi Litle Help
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/vindi`. To experiment with that code, run `bin/console` for an interactive prompt.
+ActiveRecord-like way to interact with Vindi API
 
-TODO: Delete this and the text above, and describe your gem
+## Vindi
+
+    https://vindi.github.io/api-docs/dist/?url=https://sandbox-app.vindi.com.br/api/v1/docs#/
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'vindi'
+gem 'vindi-litle-help'
 ```
 
 And then execute:
@@ -18,11 +20,31 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install vindi
+    $ gem install vindi-litle-help
 
 ## Usage
 
-TODO: Write usage instructions here
+### Config
+
+```ruby
+Vindi::Config.new do |c|
+  c.sandbox = true # default is false
+  c.api_key = 'YOUT API KEY'
+end
+```
+
+### Customers
+
+```ruby
+customer = Vindi::Customer.find(1)
+
+customers = Vindi::Customer.active
+
+customers = Vindi::Customer.where(created_at: Time.zone.today)
+
+customers = Vindi::Customer.where(gt: { created_at: Time.zone.yesterday })
+```
+
 
 ## Development
 
