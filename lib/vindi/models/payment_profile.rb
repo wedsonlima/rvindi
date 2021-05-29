@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Vindi
-  # Address
+  # Payment Profiles
   #
-  class Address < Model
+  class PaymentProfile < Model
     belongs_to :customer
   end
 end

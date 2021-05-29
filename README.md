@@ -40,7 +40,7 @@ Or install it yourself as:
 ### Config
 
 ```ruby
-Vindi::Config.new do |c|
+Vindi.config do |c|
   c.sandbox = true # default is false
   c.api_key = 'YOUR API KEY'
   c.webhook_secret = 'YOUR WEBHOOK SECRET'
