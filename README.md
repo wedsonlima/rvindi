@@ -41,7 +41,6 @@ Or install it yourself as:
 
 ```ruby
 # config/initializers/vindi.rb
-
 Vindi.config do |c|
   c.sandbox = true # default is false
   c.api_key = 'YOUR API KEY'
@@ -51,89 +50,102 @@ end
 
 ### Examples
 
-#### Plans
+#### Saruman creates a subscripton business to rend his Palantir
 
 ```ruby
+# Let's say that Gandalf wants to borrow Saruman's Palantir
+# promising he'll give it back before the end of the 3rd era.
+#
+# But Saruman is wise and he thinks he could make a good money
+# charging a rent for the use of the magic ball.
+#
+# So, Saruman went on to Vindi and threre created a product...
+#
+palantir = Vindi::Product.new.tap do |p|
+  p.code = "palantir"
+  p.name = "Palantir"
+  p.description = "The Twitch of Istari folk"
+  p.pricing_schema = { price: 42.42 }
+  p.save
+end
 
-  # List active plans
+# ...then created a plan.
+one_plan = Vindi::Plan.new.tap do |p|
+  p.code = "the-one-plan"
+  p.name = "Monthly Plan"
+  p.description = "The One Plan To Rule Them All"
+  p.period = "monthly"
+  p.recurring = true
+  p.plan_items = [
+    {
+      cycles: nil, # untill the end of time
+      product_id: palantir.id
+    }
+  ]
+  p.save
+end
 
-  plans = Vindi::Plan.active
+# Gandalf uses his fellow Bilbo's address to receive the invoices...
+gandalf = Vindi::Customer.new.tap do |c|
+  c.code = 1
+  c.name = "Gandalf the Grey"
+  c.email = "mithrandir@middlearth.io"
+  c.address = {
+    street: "Bagshot Row",
+    number: "Bag End",
+    neighborhood: "Hobbiton",
+    city: "Shire"
+  }
+  c.save
+end
 
-  # Create a recurring plan
+# ...and uses Elrond's credit card to create a payment profile...
+pp = Vindi::PaymentProfile.new.tap do |pp|
+  pp.holder_name = "Elrond Half-elven"
+  pp.card_expiration = "12/3021"
+  pp.card_number = "5167454851671773"
+  pp.card_cvv = "123"
+  pp.customer_id = gandalf.id
+  pp.save
+end
 
-  plan = Vindi::Plan.new.tap do |p|
-    p.name = "Monthly Plan"
-    p.description = "This plan will be renewed every month in the same day"
-    p.period = "monthly"
-    p.recurring = true
-    p.code = 1
-    p.plan_items = [
-      {
-        cycles: nil,
-        product_id: 1
-      }
-    ]
-  end
-
-  # Create an yearly plan with installments
-
-  plan = Vindi::Plan.new.tap do |p|
-    p.name = "Yearly Plan"
-    p.description = "This plan will be paid in 12 installments"
-    p.period = "yearly"
-    p.billing_cycles = 1
-    p.installments = 12
-    p.code = 1
-    p.plan_items = [
-      {
-        cycles: nil,
-        product_id: 1
-      }
-    ]
-  end
+# ... and then subscribes and lives Saruman's house with the Palantir in hand
+subscription = Vindi::Subscription.new.tap do |s|
+  s.plan_id = one_plan.id
+  s.customer_id = gandalf.id
+  s.payment_method_code = "credit_card"
+  s.save
+end
 ```
 
-#### Customer
+#### After some time he wants to know how the business is going
 
 ```ruby
-# Finding a specific customer
-customer = Vindi::Customer.find(1)
-# #<Vindi::Customer(customers/1) name="Gandalf the Grey" email="gandalf@middleearth.com" registry_code="" code="1" notes=nil status="archived" created_at="0001-01-01T00:00:01.000-00:00" updated_at="0001-01-01T00:00:01.000-00:00" metadata={} phones=[] id=1 address=#<Vindi::Address(addresses) street=nil number=nil additional_details=nil zipcode=nil neighborhood=nil city=nil state=nil country=nil>>
-
-# Listing all active customers
+# Active customers
 customers = Vindi::Customer.active
-# [#<Vindi::Customer(customers/1) name="Gandalf the Grey" email="gandalf@middleearth.com" registry_code="" code="1" notes=nil status="archived" created_at="0001-01-01T00:00:01.000-00:00" updated_at="0001-01-01T00:00:01.000-00:00" metadata={} phones=[] id=1 address=#<Vindi::Address(addresses) street=nil number=nil additional_details=nil zipcode=nil neighborhood=nil city=nil state=nil country=nil>>]
 
-# ...paginated
-customers = Vindi::Customer.active.page(2)
+# Active subscriptions
+subscriptions = Vindi::Subscriptions.active
 
-# New customers from yesterday
-customers = Vindi::Customer.where(created_at: Time.zone.today)
+# Subscriptions for the-one-plan
+subscriptions = Vindi::Plan.find_by(code: "the-one-plan").subscriptions
 
-# New customers since yesterday
-customers = Vindi::Customer.where(gt: { created_at: Time.zone.yesterday })
-```
+# Filter Gandalf
+gandalf = Vindi::Customer.find_by(email: "mithrandir@middlearth.io")
 
-#### Subscription
+# All Gandalf's subscriptions
+subscriptions = gandalf.subscriptions.active
 
-```ruby
-# Active subscriptions of a customer
-subscriptions = Vindi::Customer.find(1).subscriptions.active
-# [#<Vindi::Subscription(subscriptions/1) status="active" start_at="2020-07-14T00:00:00.000-03:00" ...>>,
-# #<Vindi::Subscription(subscriptions/2) status="active" start_at="2020-07-14T00:00:00.000-03:00" ...>>]
+# Cancel Gandalf's subscription
+gandalf.subscriptions.active.last.cancel!
 
-# You can cancel an active subscription
-subscription = Vindi::Customer.find(1).subscriptions.active.last
-subscription.cancel!
-
-# Or reactivate one
-subscription = Vindi::Subscription.find(1)
-subscription.active!
+# Refund the last Gandalf's payment
+gandalf.charges.last.refund!
 ```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/wedsonlima/vindi-ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/vindi/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/wedsonlima/vindi-ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/wedsonlima/vindi-ruby/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 

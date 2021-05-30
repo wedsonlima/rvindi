@@ -3,14 +3,14 @@
 require_relative "lib/vindi/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "vindi-little-help"
+  spec.name          = "vindi-hermes"
   spec.version       = Vindi::VERSION
   spec.authors       = ["Wedson Lima"]
   spec.email         = ["wedson.sousa.lima@gmail.com"]
 
-  spec.summary       = "Vindi API - With a little help from my friends"
-  spec.description   = "A little help to work with Vindi payments API in your RoR projects."
-  spec.homepage      = "https://github.com/wedsonlima/vindi"
+  spec.summary       = "Vindi API - Let the god of trade help you"
+  spec.description   = "ActiveRecord-like way to interact with Vindi API"
+  spec.homepage      = "https://github.com/wedsonlima/vindi-ruby"
   spec.license       = "MIT"
 
   spec.required_ruby_version = Gem::Requirement.new(">= 2.5.0")
@@ -21,8 +21,6 @@ Gem::Specification.new do |spec|
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{\A(?:test|spec|features)/}) }
   end
 
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
   spec.add_dependency "faraday", "~> 1.4"

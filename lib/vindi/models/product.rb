@@ -19,5 +19,7 @@ module Vindi
   #
   class Product < Model
     belongs_to :pricing_schema
+
+    has_many :plans
   end
 end
