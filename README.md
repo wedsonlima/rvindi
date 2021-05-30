@@ -24,7 +24,7 @@ ActiveRecord-like way to interact with Vindi API
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'vindi-little-help'
+gem 'vindi-hermes'
 ```
 
 And then execute:
@@ -33,7 +33,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install vindi-little-help
+    $ gem install vindi-hermes
 
 ## Usage
 
