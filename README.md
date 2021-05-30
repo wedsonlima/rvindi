@@ -50,7 +50,7 @@ end
 
 ### Examples
 
-#### Saruman creates a subscripton business to rend his Palantir
+#### Saruman creates a subscription business to rent his Palantir
 
 ```ruby
 # Let's say that Gandalf wants to borrow Saruman's Palantir
@@ -59,7 +59,7 @@ end
 # But Saruman is wise and he thinks he could make a good money
 # charging a rent for the use of the magic ball.
 #
-# So, Saruman went on to Vindi and threre created a product...
+# So, Saruman went on to Vindi and there created a product...
 #
 palantir = Vindi::Product.new.tap do |p|
   p.code = "palantir"
@@ -69,7 +69,7 @@ palantir = Vindi::Product.new.tap do |p|
   p.save
 end
 
-# ...then created a plan.
+# ...then created a recurring plan.
 one_plan = Vindi::Plan.new.tap do |p|
   p.code = "the-one-plan"
   p.name = "Monthly Plan"
@@ -99,7 +99,7 @@ gandalf = Vindi::Customer.new.tap do |c|
   c.save
 end
 
-# ...and uses Elrond's credit card to create a payment profile...
+# ...uses Elrond's credit card to create a payment profile...
 pp = Vindi::PaymentProfile.new.tap do |pp|
   pp.holder_name = "Elrond Half-elven"
   pp.card_expiration = "12/3021"
@@ -109,7 +109,7 @@ pp = Vindi::PaymentProfile.new.tap do |pp|
   pp.save
 end
 
-# ... and then subscribes and lives Saruman's house with the Palantir in hand
+# ...subscribes and then get the palantir.
 subscription = Vindi::Subscription.new.tap do |s|
   s.plan_id = one_plan.id
   s.customer_id = gandalf.id
