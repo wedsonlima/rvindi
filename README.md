@@ -1,4 +1,4 @@
-# Vindi Little Help
+# **Vindi** **Her**mes - Let the god of trade help you
 
 ActiveRecord-like way to interact with Vindi API
 

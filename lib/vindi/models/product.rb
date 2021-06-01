@@ -3,19 +3,19 @@
 module Vindi
   # Products
   #
-  # @example Listing active productts
+  # @example Active productts
   #
   #   products = Vindi::Product.active
   #
   # @example Create a product
   #
-  #   product = Vindi::Product.new.tap do |p|
-  #     p.name: "Tijolo"
-  #     p.description: "Muito bom. Mas tijolo.. nao revida"
-  #     p.pricing_schema: { price: 42.42 }
+  #   palantir = Vindi::Product.new.tap do |p|
+  #     p.code = "palantir"
+  #     p.name = "Palantir"
+  #     p.description = "The Twitch of Istari folk"
+  #     p.pricing_schema = { price: 42.42 }
+  #     p.save
   #   end
-  #
-  #   product.save
   #
   class Product < Model
     belongs_to :pricing_schema

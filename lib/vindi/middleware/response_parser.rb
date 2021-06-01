@@ -14,7 +14,7 @@ module Vindi
 
       def parse(env)
         json = Her::Middleware::ParseJSON.new.parse_json env[:body]
-        errors = json.delete(:errors) || {}
+        errors = translate_errors_to_activemodel_style(json.delete(:errors) || [])
         metadata = (json.delete(:metadata) || {}).merge(extract_response_headers_info(env[:response_headers]))
 
         {
@@ -22,6 +22,16 @@ module Vindi
           errors: errors,
           metadata: metadata
         }
+      end
+
+      def translate_errors_to_activemodel_style(errors)
+        errors.map do |e|
+          {
+            attribute: e[:parameter],
+            type: e[:id] == "invalid_parameter" ? :invalid : e[:id],
+            message: e[:message]
+          }
+        end
       end
 
       def extract_response_headers_info(response_headers)
