@@ -27,9 +27,13 @@ module Vindi
   mattr_accessor :api_key
   @@api_key = false
 
-  # Validates incoming Vindi Webhooks calls with the given secret key.
-  mattr_accessor :webhook_secret
-  @@webhook_secret = nil
+  # Validates incoming Vindi Webhook calls with the given secret name.
+  mattr_accessor :webhook_name
+  @@webhook_name = nil
+
+  # Validates incoming Vindi Webhook calls with the given secret password.
+  mattr_accessor :webhook_password
+  @@webhook_password = nil
 
   VINDI_API_URL = "https://app.vindi.com.br/api/v1"
   VINDI_SANDBOX_API_URL = "https://sandbox-app.vindi.com.br/api/v1"

@@ -44,7 +44,8 @@ Or install it yourself as:
 Vindi.config do |c|
   c.sandbox = true # default is false
   c.api_key = 'YOUR API KEY'
-  c.webhook_secret = 'YOUR WEBHOOK SECRET'
+  c.webhook_name = 'BASIC AUTH NAME'
+  c.webhook_password = 'BASIC AUTH PASSWORD'
 end
 ```
 
@@ -141,6 +142,56 @@ gandalf.subscriptions.active.last.cancel!
 
 # Refund the last Gandalf's payment
 gandalf.charges.last.refund!
+```
+
+## Webhooks
+
+You must validate incoming data from Vindi.
+  * [Vindi Blog Post](https://atendimento.vindi.com.br/hc/pt-br/articles/203305800)
+
+You can validate webhook calls using baisc auth.
+Just configure a webhook call with something like this `https://NAME:PASSWORD@www.startupmassa.com/vindi/webhook`.
+
+On Vindi admin dashboard
+
+```bash
+https://vindi:123456@www.startupmassa.com/vindi/webhook
+```
+
+On your project
+
+```ruby
+# config/initializers/vindi.rb
+Vindi.config do |c|
+  c.api_key = '123456'
+  c.webhook_name = 'vindi'
+  c.webhook_password = '123456'
+end
+
+# routes.rb
+namespace :vindi do
+  post :webhook, to: "webhook#listener"
+end
+
+# vindi/webhook_controller.rb
+class Vindi::Webhook < ActionController::Base
+  http_basic_authenticate_with name: Vindi.webhook_name, password: Vindi.webhook_password
+
+  # POST https://usuario:senha@www.startupmassa.com/vindi/webhook
+  def listener
+    case event_params[:type]
+    when "charge_rejected" # defaulting user?
+    when "bill_paid" # do the magic
+    else
+      head :ok
+    end
+  end
+
+  private
+    def event_params
+      params.require(:event).permit!
+    end
+end
 ```
 
 ## Contributing

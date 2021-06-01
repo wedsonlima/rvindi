@@ -12,11 +12,6 @@ module Vindi
   #     s.save
   #   end
   #
-  # @example Cancel a subscription
-  #
-  #   @subscription = Vindi::Customer.find(1).subscriptions.active.last
-  #   @subscription.cancel!
-  #
   class Subscription < Model
     belongs_to :customer
     belongs_to :plan
@@ -25,6 +20,11 @@ module Vindi
 
     validates :plan_id, :customer_id, :payment_method_code, presence: true
 
+    # @example Cancel a subscription
+    #
+    #   @subscription = Vindi::Customer.find(1).subscriptions.active.last
+    #   @subscription.cancel!
+    #
     def cancel!
       destroy
     end
