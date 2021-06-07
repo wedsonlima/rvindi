@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-app.vindi.com.br/api/v1/products?page=1&per_page=25&query=code=one-ring&sort_by=created_at&sort_order=desc
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Basic YUZ6X2U2STFBNFJhN19kN3RiaC1GNVcwV3RRTGVfVWI5andGbW1JUVNVUTo=
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Jun 2021 14:19:10 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '15'
+      Connection:
+      - keep-alive
+      Rate-Limit-Limit:
+      - '120'
+      Rate-Limit-Reset:
+      - '1623075608'
+      Rate-Limit-Remaining:
+      - '115'
+      Total:
+      - '0'
+      Per-Page:
+      - '25'
+      Etag:
+      - W/"86d8b086af0fc30d06856e218fcfdb6b"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 265851ee-a9a8-42cf-8649-72d4ad9f9655
+      X-Runtime:
+      - '0.017470'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - Origin
+    body:
+      encoding: UTF-8
+      string: '{"products":[]}'
+  recorded_at: Mon, 07 Jun 2021 14:19:11 GMT
+recorded_with: VCR 6.0.0

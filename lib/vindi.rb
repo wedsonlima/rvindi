@@ -10,7 +10,7 @@ require_relative "vindi/middleware/rate_limit_validation"
 require_relative "vindi/middleware/response_parser"
 require_relative "vindi/core_extensions/her_with_query_filter"
 
-module Vindi
+module Vindi # :nodoc:
   class Error < StandardError; end
 
   RESOURCE_MODELS = Dir[File.expand_path("vindi/models/**/*.rb", File.dirname(__FILE__))].freeze

@@ -1,4 +1,4 @@
-# **Vindi** **Her**mes - Let the god of trade help you
+# Vindi Hermes
 
 ActiveRecord-like way to interact with Vindi API
 
@@ -13,18 +13,15 @@ ActiveRecord-like way to interact with Vindi API
   *
     [Vindi - Official Gem](https://github.com/vindi/vindi-ruby)
 
-    > You may ask: Why create another if there is already one that's official?
-    > *And I'll tell you, **little grasshopper**: Because I think this one could be more beautiful.*
-    >
-    > And you also may ask: Why the hell is the doc in english when all those interested are from the big banana republic?
-    > *And my answer to you would be: You ask a lot of questions, huh?*
+    > You may ask: Why create another gem if there is already one that's official?
+    > *And I'll tell you, **little grasshopper**: Because MIT licenses are better than GPLv3.*
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'vindi-hermes'
+gem "vindi-hermes"
 ```
 
 And then execute:
@@ -43,9 +40,9 @@ Or install it yourself as:
 # config/initializers/vindi.rb
 Vindi.config do |c|
   c.sandbox = true # default is false
-  c.api_key = 'YOUR API KEY'
-  c.webhook_name = 'BASIC AUTH NAME'
-  c.webhook_password = 'BASIC AUTH PASSWORD'
+  c.api_key = "YOUR API KEY"
+  c.webhook_name = "BASIC AUTH NAME"
+  c.webhook_password = "BASIC AUTH PASSWORD"
 end
 ```
 
@@ -163,9 +160,9 @@ On your project
 ```ruby
 # config/initializers/vindi.rb
 Vindi.config do |c|
-  c.api_key = '123456'
-  c.webhook_name = 'vindi'
-  c.webhook_password = '123456'
+  c.api_key = "123456"
+  c.webhook_name = "vindi"
+  c.webhook_password = "123456"
 end
 
 # routes.rb

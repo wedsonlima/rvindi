@@ -67,6 +67,16 @@ module Vindi
       self
     end
 
+    # Archive a record.
+    #
+    # @example Archive a customer
+    #
+    #   Vindi::Customer.find_by(email: "sarumanthewhite@middlearth.io").archive!
+    #
+    def archive!
+      destroy
+    end
+
     # @private
     def valid?
       super && response_errors.empty?
