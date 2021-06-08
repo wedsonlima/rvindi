@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    vindi-hermes (0.0.1)
+    vindi-hermes (0.0.2)
       faraday (~> 1.4)
       faraday_middleware (~> 1.0)
       her (~> 1.1)
