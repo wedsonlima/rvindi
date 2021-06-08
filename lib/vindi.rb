@@ -6,9 +6,12 @@ require "her"
 
 require_relative "vindi/version"
 require_relative "vindi/rate_limit"
+
 require_relative "vindi/middleware/rate_limit_validation"
 require_relative "vindi/middleware/response_parser"
+
 require_relative "vindi/core_extensions/her_with_query_filter"
+require_relative "vindi/core_extensions/her_save_only_changed_attrs"
 
 module Vindi # :nodoc:
   class Error < StandardError; end

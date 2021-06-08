@@ -19,25 +19,27 @@ module CoreExtensions
       return self if params.blank? && !@_fetch.nil?
 
       clone.tap do |r|
-        default_params = extract_params params, r.params
-        query = params_to_query params, parse_query(r.params.fetch(:query, ""))
+        r.params = r.params.merge(params)
 
-        r.params = r.params.merge default_params.merge(query: query)
+        # Default params, as order and page number, will always be used.
+        default_params = extract_default_params r.params
+
+        # Query filters is joined into a single param called :query.
+        query = [r.params.delete(:query), params_to_query(r.params)].compact.join " "
+
+        r.params = { query: query }.merge(default_params)
+
         r.clear_fetch_cache!
       end
     end
 
     private
 
-    def parse_query(query)
-      CGI.parse(query).transform_values(&:first)
-    end
-
-    def extract_params(new_ones, old_ones)
-      page        = new_ones.delete(:page)        || old_ones.delete(:page)       || 1
-      per_page    = new_ones.delete(:per_page)    || old_ones.delete(:per_page)   || 25
-      sort_by     = new_ones.delete(:sort_by)     || old_ones.delete(:sort_by)    || :created_at
-      sort_order  = new_ones.delete(:sort_order)  || old_ones.delete(:sort_order) || :desc
+    def extract_default_params(params)
+      page        = params.delete(:page)        || 1
+      per_page    = params.delete(:per_page)    || 25
+      sort_by     = params.delete(:sort_by)     || :created_at
+      sort_order  = params.delete(:sort_order)  || :desc
 
       {
         page: page,
@@ -47,8 +49,8 @@ module CoreExtensions
       }.delete_if { |_, v| v.nil? }
     end
 
-    def params_to_query(params, query)
-      params.merge(query).map do |key, value|
+    def params_to_query(params)
+      params.map do |key, value|
         case key
         when :contains  then value.map { |k, v| "#{k}:#{v}" }.last
         when :gt        then value.map { |k, v| "#{k}>#{v}" }.last
