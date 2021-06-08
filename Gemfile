@@ -9,6 +9,7 @@ gem "rake", "~> 13.0"
 
 group :development do
   gem "httplog"
+  gem "pry-byebug"
   gem "rubocop"
 end
 
