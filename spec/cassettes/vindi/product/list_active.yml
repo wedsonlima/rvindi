@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://sandbox-app.vindi.com.br/api/v1/products?page=1&per_page=25&query=name=Palantir%20status=active&sort_by=created_at&sort_order=desc
+    uri: https://sandbox-app.vindi.com.br/api/v1/products?page=1&per_page=25&query=status=active%20name=Palantir&sort_by=created_at&sort_order=desc
     body:
       encoding: US-ASCII
       string: ''

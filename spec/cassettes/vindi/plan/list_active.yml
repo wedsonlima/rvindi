@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://sandbox-app.vindi.com.br/api/v1/customers?page=1&per_page=25&query=status=active%20name=Gandalf&sort_by=created_at&sort_order=desc
+    uri: https://sandbox-app.vindi.com.br/api/v1/plans?page=1&per_page=25&query=status=active%20name=%27The%20One%20Plan%27&sort_by=created_at&sort_order=desc
     body:
       encoding: US-ASCII
       string: ''
@@ -21,37 +21,37 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Jun 2021 12:57:06 GMT
+      - Tue, 08 Jun 2021 15:38:32 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '16'
+      - '1165'
       Connection:
       - keep-alive
       Rate-Limit-Limit:
       - '120'
       Rate-Limit-Reset:
-      - '1623070686'
+      - '1623166772'
       Rate-Limit-Remaining:
       - '119'
       Total:
-      - '0'
+      - '1'
       Per-Page:
       - '25'
       Etag:
-      - W/"c144af09ee7603156af76eec2bc753bd"
+      - W/"3f32f68fcc78d76b34600fb96ea8f493"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - f0328b47-6ba1-40c2-8534-7298b13b305b
+      - 9fb6e71f-e3a0-478e-87df-6e4c723e5352
       X-Runtime:
-      - '0.017882'
+      - '0.051239'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Vary:
       - Origin
     body:
       encoding: UTF-8
-      string: '{"customers":[]}'
-  recorded_at: Mon, 07 Jun 2021 12:57:06 GMT
+      string: '{"plans":[]}'
+  recorded_at: Tue, 08 Jun 2021 15:38:32 GMT
 recorded_with: VCR 6.0.0

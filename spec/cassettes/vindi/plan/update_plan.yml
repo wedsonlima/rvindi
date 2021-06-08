@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://sandbox-app.vindi.com.br/api/v1/plans/61396
+    body:
+      encoding: UTF-8
+      string: '{"name":"The One Monthly Plan"}'
+    headers:
+      Authorization:
+      - Basic YUZ6X2U2STFBNFJhN19kN3RiaC1GNVcwV3RRTGVfVWI5andGbW1JUVNVUTo=
+      User-Agent:
+      - Faraday v1.4.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Jun 2021 18:10:27 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '1180'
+      Connection:
+      - keep-alive
+      Rate-Limit-Limit:
+      - '120'
+      Rate-Limit-Reset:
+      - '1623089485'
+      Rate-Limit-Remaining:
+      - '116'
+      Etag:
+      - W/"156c0a207b11bfd474bca07dd8fb0cbb"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 73db2cca-0b3d-4baf-8686-3ac8ab447c4f
+      X-Runtime:
+      - '0.117857'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - Origin
+    body:
+      encoding: UTF-8
+      string: '{"plan":{"id":61396,"name":"The One Monthly Plan","interval":"months","interval_count":1,"billing_trigger_type":"beginning_of_period","billing_trigger_day":0,"billing_cycles":null,"code":"the-one-plan","description":"The
+        One Plan To Rule Them All","status":"active","installments":1,"invoice_split":false,"interval_name":"Mensal","created_at":"2021-06-07T15:10:26.000-03:00","updated_at":"2021-06-07T15:10:27.000-03:00","plan_items":[{"id":62603,"product":{"id":156003,"name":"Palantir","code":"palantir","unit":null,"status":"active","description":"The
+        Twitch of Istari folk","invoice":"always","created_at":"2021-06-07T11:19:09.000-03:00","updated_at":"2021-06-07T11:27:34.000-03:00","pricing_schema":{"id":462037,"short_format":"R$
+        50,00","price":"50.0","minimum_price":null,"schema_type":"flat","pricing_ranges":[],"created_at":"2021-06-07T11:27:34.000-03:00"},"metadata":{}},"pricing_schema":{"id":462037,"short_format":"R$
+        50,00","price":"50.0","minimum_price":null,"schema_type":"flat","pricing_ranges":[],"created_at":"2021-06-07T11:27:34.000-03:00"},"cycles":null,"created_at":"2021-06-07T15:10:26.000-03:00","updated_at":"2021-06-07T15:10:26.000-03:00"}],"metadata":{}}}'
+  recorded_at: Mon, 07 Jun 2021 18:10:28 GMT
+recorded_with: VCR 6.0.0
