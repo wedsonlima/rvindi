@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "dry-configurable"
+
 require "faraday"
 require "faraday_middleware"
 require "her"
@@ -14,6 +16,8 @@ require_relative "vindi/core_extensions/her_with_query_filter"
 require_relative "vindi/core_extensions/her_save_only_changed_attrs"
 
 module Vindi # :nodoc:
+  extend Dry::Configurable
+
   class Error < StandardError; end
 
   RESOURCE_MODELS = Dir[File.expand_path("vindi/models/**/*.rb", File.dirname(__FILE__))].freeze
@@ -22,47 +26,44 @@ module Vindi # :nodoc:
     autoload File.basename(f, ".rb").camelcase.to_sym, f
   end
 
-  # Set sandbox to true in dev mode.
-  mattr_accessor :sandbox
-  @@sandbox = false
-
-  # Set the API KEY to assign the API calls.
-  mattr_accessor :api_key
-  @@api_key = false
-
-  # Validates incoming Vindi Webhook calls with the given secret name.
-  mattr_accessor :webhook_name
-  @@webhook_name = nil
-
-  # Validates incoming Vindi Webhook calls with the given secret password.
-  mattr_accessor :webhook_password
-  @@webhook_password = nil
-
   VINDI_API_URL = "https://app.vindi.com.br/api/v1"
   VINDI_SANDBOX_API_URL = "https://sandbox-app.vindi.com.br/api/v1"
 
-  def self.api_url
-    return VINDI_SANDBOX_API_URL if @@sandbox
-
-    VINDI_API_URL
-  end
+  # Set sandbox to true in dev mode.
+  setting :sandbox, false
+  # Set the API KEY to assign the API calls.
+  setting :api_key
+  # Validates incoming Vindi Webhook calls with the given secret name.
+  setting :webhook_secret_name
+  # Validates incoming Vindi Webhook calls with the given secret password.
+  setting :webhook_secret_password
 
   # @example
-  #   Vindi.setup do |c|
-  #     c.sandbox = true
-  #     c.api_key = 'MY API KEY'
+  #   Vindi.configure do |config|
+  #     config.sandbox = true
+  #     config.api_key = "MY API KEY"
+  #     config.webhook_secret_name = "A SECRET NAMEE"
+  #     config.webhook_secret_password = "A SECRET PASSWORD"
   #   end
   #
-  def self.config
-    yield self
+  def self.configure
+    super
 
     her_setup
+  end
+
+  def self.api_url
+    return VINDI_SANDBOX_API_URL if config.sandbox
+
+    VINDI_API_URL
   end
 
   # @private
   def self.her_setup
     Her::API.setup url: Vindi.api_url do |conn|
-      conn.basic_auth Vindi.api_key, ""
+      conn.headers["User-Agent"] = "vindi-hermes/#{Vindi::VERSION}"
+
+      conn.basic_auth config.api_key, ""
 
       # Request
       conn.use ::Vindi::Middleware::RateLimitValidation

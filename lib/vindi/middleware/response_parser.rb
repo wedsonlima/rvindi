@@ -4,7 +4,7 @@ module Vindi
   module Middleware
     # Vindi Response Parser
     #
-    # Set metada info to metadata object.
+    # Saves metadata info into metadata object.
     class ResponseParser < Faraday::Response::Middleware
       def on_complete(env)
         env[:body] = parse(env[:status] == 204 ? "{}" : env)

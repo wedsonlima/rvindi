@@ -29,8 +29,6 @@ module Vindi
 
     store_metadata :_metadata
 
-    before_validation
-
     # Archive a record.
     #
     # @example Archive a customer

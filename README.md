@@ -41,8 +41,8 @@ Or install it yourself as:
 Vindi.config do |c|
   c.sandbox = true # default is false
   c.api_key = "YOUR API KEY"
-  c.webhook_name = "BASIC AUTH NAME"
-  c.webhook_password = "BASIC AUTH PASSWORD"
+  c.webhook_secret_name = "BASIC AUTH NAME"
+  c.webhook_secret_password = "BASIC AUTH PASSWORD"
 end
 ```
 
@@ -159,10 +159,10 @@ On your project
 
 ```ruby
 # config/initializers/vindi.rb
-Vindi.config do |c|
-  c.api_key = "123456"
-  c.webhook_name = "vindi"
-  c.webhook_password = "123456"
+Vindi.configure do |config|
+  config.api_key = "123456"
+  config.webhook_secret_name = "vindi"
+  config.webhook_secret_password = "123456"
 end
 
 # routes.rb
@@ -172,7 +172,7 @@ end
 
 # vindi/webhook_controller.rb
 class Vindi::Webhook < ActionController::Base
-  http_basic_authenticate_with name: Vindi.webhook_name, password: Vindi.webhook_password
+  http_basic_authenticate_with name: Vindi.webhook_secret_name, password: Vindi.webhook_secret_password
 
   # POST https://usuario:senha@www.startupmassa.com/vindi/webhook
   def listener

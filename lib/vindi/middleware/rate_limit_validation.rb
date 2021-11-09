@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# Saves the rate limts from Vindi responses.
 module Vindi
   module Middleware
+    # Saves the rate limts from Vindi responses.
     class RateLimitValidation < Faraday::Middleware
       def call(env)
         raise Vindi::RateLimitError, "Rate limit reached" if rate_limit_reached?

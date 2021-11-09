@@ -8,6 +8,7 @@ gemspec
 gem "rake", "~> 13.0"
 
 group :development do
+  gem "dotenv"
   gem "httplog"
   gem "pry-byebug"
   gem "rubocop"
