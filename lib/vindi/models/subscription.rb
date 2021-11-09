@@ -37,8 +37,8 @@ module Vindi
     #   @subscription.reactivate!
     #
     def reactivate!
-      # REVIEW: There's another way to do this using custom_post but the result breaks the normal
-      # flow becausee the API returns the root as a singular name and HER expects to be a plural name.
+      # REVIEW: There's another way to do this using `custom_post` but the result breaks the normal
+      # flow because the API returns the root resource as singular name and HER expects to be a plural.
 
       self.class.post_raw(:reactivate, id: id) do |parsed_data, _|
         assign_attributes parsed_data[:data][self.class.collection_path.singularize.to_sym]
