@@ -20,6 +20,8 @@ module Vindi
 
     validates :plan_id, :customer_id, :payment_method_code, presence: true
 
+    scope :inactive, -> { canceled }
+
     # @example Cancel a subscription
     #
     #   @subscription = Vindi::Customer.find(1).subscriptions.active.last
@@ -27,6 +29,20 @@ module Vindi
     #
     def cancel!
       destroy
+    end
+
+    # @example Reactivate a subscription
+    #
+    #   @subscription = Vindi::Customer.find(1).subscriptions.inactive.last
+    #   @subscription.reactivate!
+    #
+    def reactivate!
+      # REVIEW: There's another way to do this using custom_post but the result breaks the normal
+      # flow becausee the API returns the root as a singular name and HER expects to be a plural name.
+
+      self.class.post_raw(:reactivate, id: id) do |parsed_data, _|
+        assign_attributes parsed_data[:data][self.class.collection_path.singularize.to_sym]
+      end
     end
   end
 end

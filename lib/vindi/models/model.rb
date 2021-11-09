@@ -10,8 +10,8 @@ module Vindi
     #
     scope :active,    -> { where(status: :active) }
     scope :inactive,  -> { where(status: :inactive) }
-    scope :archived,  -> { where(status: :archived) }
     scope :canceled,  -> { where(status: :canceled) }
+    scope :archived,  -> { where(status: :archived) }
 
     # @example Active Customers paginated
     #
