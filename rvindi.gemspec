@@ -3,14 +3,14 @@
 require_relative "lib/vindi/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "vindi-hermes"
+  spec.name          = "rvindi"
   spec.version       = Vindi::VERSION
   spec.authors       = ["Wedson Lima"]
   spec.email         = ["wedson.sousa.lima@gmail.com"]
 
-  spec.summary       = "Vindi API - Let the god of trade help you"
-  spec.description   = "ActiveRecord-like way to interact with Vindi API"
-  spec.homepage      = "https://github.com/wedsonlima/vindi-ruby"
+  spec.summary       = "Vindi API - Simple wrapper for the Vindi API"
+  spec.description   = "Vindi API - Simple wrapper for the Vindi API"
+  spec.homepage      = "https://github.com/wedsonlima/rvindi"
   spec.license       = "MIT"
 
   spec.required_ruby_version = Gem::Requirement.new(">= 2.5.0")

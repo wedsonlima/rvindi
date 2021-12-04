@@ -1,4 +1,4 @@
-# Vindi Hermes
+# Vindi Ruby
 
 ActiveRecord-like way to interact with Vindi API
 
@@ -21,7 +21,7 @@ ActiveRecord-like way to interact with Vindi API
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "vindi-hermes"
+gem "rvindi"
 ```
 
 And then execute:
@@ -30,7 +30,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install vindi-hermes
+    $ gem install rvindi
 
 ## Usage
 
@@ -38,7 +38,7 @@ Or install it yourself as:
 
 ```ruby
 # config/initializers/vindi.rb
-Vindi.config do |c|
+Vindi.configure do |c|
   c.sandbox = true # default is false
   c.api_key = "YOUR API KEY"
   c.webhook_secret_name = "BASIC AUTH NAME"
@@ -57,7 +57,7 @@ end
 # But Saruman is wise and he thinks he could make a good money
 # charging a rent for the use of the magic ball.
 #
-# So, Saruman went on to Vindi and there created a product...
+# So, Saruman went on to Vindi and creates a product...
 #
 palantir = Vindi::Product.new.tap do |p|
   p.code = "palantir"
@@ -67,7 +67,7 @@ palantir = Vindi::Product.new.tap do |p|
   p.save
 end
 
-# ...then created a recurring plan.
+# ...then creates a recurring plan.
 one_plan = Vindi::Plan.new.tap do |p|
   p.code = "the-one-plan"
   p.name = "Monthly Plan"
@@ -107,7 +107,7 @@ pp = Vindi::PaymentProfile.new.tap do |pp|
   pp.save
 end
 
-# ...subscribes and then get the palantir.
+# ...subscribes to `the one plan` and then get the palantir.
 subscription = Vindi::Subscription.new.tap do |s|
   s.plan_id = one_plan.id
   s.customer_id = gandalf.id
@@ -185,6 +185,7 @@ class Vindi::Webhook < ActionController::Base
   end
 
   private
+
     def event_params
       params.require(:event).permit!
     end

@@ -61,7 +61,7 @@ module Vindi # :nodoc:
   # @private
   def self.her_setup
     Her::API.setup url: Vindi.api_url do |conn|
-      conn.headers["User-Agent"] = "vindi-hermes/#{Vindi::VERSION}"
+      conn.headers["User-Agent"] = "wedsonlima/rvindi #{Vindi::VERSION}"
 
       conn.basic_auth config.api_key, ""
 
